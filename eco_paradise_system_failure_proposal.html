@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Paradise: [SYSTEM_FAILURE] - Propuesta de Proyecto Scratch AEP</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        kawaii: {
+                            pink: '#ffb6c1',
+                            mint: '#a8e6cf',
+                            sky: '#bae1ff',
+                            yellow: '#ffdfba',
+                            purple: '#e8dff5'
+                        },
+                        glitch: {
+                            dark: '#0a0c10',
+                            panel: '#121721',
+                            red: '#ff2a5f',
+                            cyan: '#00f0ff',
+                            green: '#00ff66',
+                            purple: '#9d4edd'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 620px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 380px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .scratch-block-event {
+            background-color: #ffbf00;
+            border: 1px solid #de9f00;
+            color: #000;
+        }
+        .scratch-block-control {
+            background-color: #ffab19;
+            border: 1px solid #cf8200;
+            color: #fff;
+        }
+        .scratch-block-looks {
+            background-color: #9966ff;
+            border: 1px solid #7744cc;
+            color: #fff;
+        }
+        .scratch-block-variable {
+            background-color: #ff8c1a;
+            border: 1px solid #db6e00;
+            color: #fff;
+        }
+        .glitch-text {
+            text-shadow: 2px 0 #ff2a5f, -2px 0 #00f0ff;
+        }
+        .scanline {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.3));
+            background-size: 100% 4px;
+        }
+        .slide-active {
+            display: flex !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-glitch-red selection:text-white min-h-screen flex flex-col">
+
+    <header class="bg-slate-900/90 backdrop-blur-md text-white border-b border-slate-800 sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-400 via-purple-500 to-glitch-red flex items-center justify-center text-slate-950 font-black text-xl shadow-lg">
+                        <i class="fa-solid fa-cat"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-display font-extrabold text-base sm:text-lg tracking-tight">Eco-Paradise: <span class="text-glitch-red font-mono">[SYSTEM_FAILURE]</span></h1>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Scratch 3.0</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Asignatura: <span class="text-sky-400 font-semibold">AEP (Aprender, Emprender, Prosperar)</span> | Colegio Público Enmanuel Mongalo y Rubio</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button id="btn-view-doc" onclick="switchView('doc')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md hover:bg-emerald-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-code"></i> Propuesta Oficial
+                    </button>
+                    <button id="btn-view-sim" onclick="switchView('sim')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-gamepad text-glitch-red"></i> Simulador Interactivo
+                    </button>
+                    <button id="btn-view-presentation" onclick="switchView('presentation')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-display text-sky-400"></i> Exposición
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-slate-900 border-b border-slate-800 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center md:text-left">
+                <div class="p-2 border-r border-slate-800">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono block">Autor / Estudiante</span>
+                    <span class="text-sm font-bold text-white flex items-center justify-center md:justify-start gap-1.5">
+                        <i class="fa-solid fa-user-ninja text-emerald-400 text-xs"></i> Gerson Javier Castro Aráuz
+                    </span>
+                </div>
+                <div class="p-2 border-r border-slate-800">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono block">Destinatario</span>
+                    <span class="text-sm font-bold text-white flex items-center justify-center md:justify-start gap-1.5">
+                        <i class="fa-solid fa-chalkboard-user text-sky-400 text-xs"></i> Docente de AEP
+                    </span>
+                </div>
+                <div class="p-2 border-r border-slate-800">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono block">Enfoque Técnico</span>
+                    <span class="text-sm font-bold text-white flex items-center justify-center md:justify-start gap-1.5">
+                        <i class="fa-solid fa-cubes text-amber-400 text-xs"></i> Programación por Bloques
+                    </span>
+                </div>
+                <div class="p-2">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider font-mono block">Estrategia Pedagógica</span>
+                    <span class="text-sm font-bold text-glitch-red flex items-center justify-center md:justify-start gap-1.5">
+                        <i class="fa-solid fa-skull-crossbones text-xs"></i> Deconstrucción Ludológica
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <div id="view-doc" class="space-y-12">
+
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 p-8 md:p-12 border border-slate-800 shadow-2xl">
+                <div class="relative z-10 max-w-3xl space-y-5">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-pink-500/20 text-pink-300 border border-pink-500/30">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Estética Inicial Kawaii
+                        </span>
+                        <i class="fa-solid fa-arrow-right text-slate-500 text-xs"></i>
+                        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-glitch-red/20 text-glitch-red border border-glitch-red/30">
+                            <i class="fa-solid fa-bug mr-1"></i> System Failure / Glitch Art
+                        </span>
+                    </div>
+
+                    <h2 class="text-3xl sm:text-5xl font-display font-black tracking-tight text-white leading-tight">
+                        Deconstrucción de Videojuego: La paradoja de la <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-sky-300 to-emerald-300">Culpa Ambiental Individual</span>
+                    </h2>
+
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed font-light">
+                        Una propuesta educativa disruptiva en Scratch 3.0 que subvierte las expectativas visuales del usuario para exponer cómo el discurso de la "huella de carbono personal" oculta la responsabilidad masiva de las multinacionales petroleras e industriales.
+                    </p>
+
+                    <div class="pt-2 flex flex-wrap gap-4">
+                        <button onclick="switchView('sim')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-extrabold hover:brightness-110 transition-all shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> Probar Prototipo Interactivo
+                        </button>
+                        <a href="#narrativa" class="px-6 py-3 rounded-xl bg-slate-800 text-slate-200 font-bold border border-slate-700 hover:bg-slate-700 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-diagram-project"></i> Ver las 5 Fases del Juego
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <section class="space-y-6">
+                <div class="border-l-4 border-emerald-400 pl-4">
+                    <h3 class="text-2xl font-display font-bold text-white">I. Introducción y Planteamiento del Problema</h3>
+                    <p class="text-slate-400 text-sm">Fundamentación de la deconstrucción narrativa en Scratch 3.0</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-3">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-code font-mono"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-lg">Más allá de la Programación Básica</h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            El uso de Scratch 3.0 trasciende el aprendizaje estrictamente técnico. Se consolida como un vehículo eficaz para la expresión artística, la narrativa interactiva y la crítica social profunda dentro de la materia AEP.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-3">
+                        <div class="w-10 h-10 rounded-lg bg-glitch-red/10 text-glitch-red flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-masks-theater"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-lg">Subversión de la Estética Kawaii</h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            A través de una apariencia infantil y amigable (tonos pastel, música chiptune, un gato guía llamado Lumi), el proyecto atrae al jugador a tareas cotidianas para luego hacer colapsar el sistema mediante errores programados y saturación algorítmica.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-6">
+                <div class="border-l-4 border-sky-400 pl-4">
+                    <h3 class="text-2xl font-display font-bold text-white">II. Justificación y Marco Teórico</h3>
+                    <p class="text-slate-400 text-sm">Evidencia estadística y antecedentes sociológicos</p>
+                </div>
+
+                <div class="bg-slate-900 p-6 md:p-8 rounded-2xl border border-slate-800 space-y-6">
+                    <div class="bg-slate-950 p-6 rounded-xl border-l-4 border-glitch-red text-slate-200 italic space-y-2">
+                        <p class="text-base sm:text-lg">
+                            «Un total de 100 productores de energía fósil son responsables de más del 71% de las emisiones industriales de gases de efecto invernadero en el mundo desde 1988.»
+                        </p>
+                        <span class="block text-xs font-mono text-slate-400 not-italic font-bold">
+                            — CDP (Carbon Disclosure Project), Carbon Majors Report (2017)
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-sky-300 flex items-center gap-2">
+                                <i class="fa-solid fa-industry text-xs"></i> La Invención de la "Huella Personal"
+                            </h4>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                El concepto de huella de carbono personal fue popularizado en los años 2000 por la petrolera British Petroleum (BP) mediante campañas masivas. Su objetivo fue desviar la atención de las regulaciones corporativas cargando la responsabilidad moral al ciudadano de a pie.
+                            </p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-purple-300 flex items-center gap-2">
+                                <i class="fa-solid fa-compact-disc text-xs"></i> Deconstrucción Ludológica
+                            </h4>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                Basado en referentes del videojuego independiente como <em>Doki Doki Literature Club</em> y <em>Undertale</em>, romper la cuarta pared e inhabilitar los controles del usuario genera un impacto emocional y cognitivo mucho más duradero que una charla teórica pasiva.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-6">
+                <div class="border-l-4 border-amber-400 pl-4">
+                    <h3 class="text-2xl font-display font-bold text-white">III. Datos y Comparativa de Impacto</h3>
+                    <p class="text-slate-400 text-sm">Visualización interactiva de la desproporción matemática</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-mono text-emerald-400 uppercase font-bold block mb-1">Gráfico 1: Distribución Global de Emisiones</span>
+                            <h4 class="font-bold text-white text-lg mb-2">Responsabilidad Industrial vs Acciones Ciudadanas</h4>
+                            <p class="text-slate-400 text-xs mb-4">
+                                Comparación entre el volumen de emisiones de 100 corporaciones fósiles y el impacto máximo alcanzable por esfuerzos individuales de reciclaje a escala humana.
+                            </p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chartEmisiones"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-mono text-amber-400 uppercase font-bold block mb-1">Gráfico 2: Calculadora de Equivalencia temporal</span>
+                            <h4 class="font-bold text-white text-lg mb-2">Años de Reciclaje requeridos por Minuto Industrial</h4>
+                            <p class="text-slate-400 text-xs mb-4">
+                                Demostración de cómo 1 minuto de operación no regulada de la Entidad Industrial Alpha equivale a más de 400,000 años de acciones individuales continuas.
+                            </p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chartTiempo"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="narrativa" class="space-y-6">
+                <div class="border-l-4 border-pink-400 pl-4">
+                    <h3 class="text-2xl font-display font-bold text-white">IV. Estructura Narrativa y Mecánicas (5 Fases)</h3>
+                    <p class="text-slate-400 text-sm">Evolución progresiva desde el entorno pacífico hasta el colapso simbólico</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="bg-slate-900 p-4 rounded-xl border-t-4 border-pink-400 space-y-2">
+                        <span class="text-[10px] font-mono text-pink-300 uppercase font-bold">Fase 1 (0% - 25%)</span>
+                        <h4 class="font-bold text-white text-sm">Ilusión Kawaii</h4>
+                        <p class="text-slate-400 text-xs">Música chiptune, gato Lumi. Elección de sorbetes, reciclaje de botellas y focos apagados.</p>
+                    </div>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border-t-4 border-sky-400 space-y-2">
+                        <span class="text-[10px] font-mono text-sky-300 uppercase font-bold">Fase 2 (25% - 50%)</span>
+                        <h4 class="font-bold text-white text-sm">Fría Matemática</h4>
+                        <p class="text-slate-400 text-xs">Aparición de calculadora ambiental. Lumi muestra rostro perplejo: 0.000001% vs 71%.</p>
+                    </div>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border-t-4 border-amber-400 space-y-2">
+                        <span class="text-[10px] font-mono text-amber-300 uppercase font-bold">Fase 3 (50% - 85%)</span>
+                        <h4 class="font-bold text-white text-sm">Corrupción Visual</h4>
+                        <p class="text-slate-400 text-xs">El río pasa a verde tóxico. Minijuego de borrar humo: cada clic genera 50 clones de nubes extra.</p>
+                    </div>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border-t-4 border-glitch-red space-y-2">
+                        <span class="text-[10px] font-mono text-glitch-red uppercase font-bold">Fase 4 (85% - 100%)</span>
+                        <h4 class="font-bold text-white text-sm">Corporate Shutdown</h4>
+                        <p class="text-slate-400 text-xs">Filtro pixel/color acelerativo. Ventana simulada de borrado por las industrias. Pantalla negra.</p>
+                    </div>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border-t-4 border-emerald-400 space-y-2">
+                        <span class="text-[10px] font-mono text-emerald-300 uppercase font-bold">Fase 5 (Final)</span>
+                        <h4 class="font-bold text-white text-sm">Acción Colectiva</h4>
+                        <p class="text-slate-400 text-xs">Terminal verde. Mensaje reflexivo: Tus hábitos importan, pero la verdadera salida es la organización.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-6">
+                <div class="border-l-4 border-purple-400 pl-4">
+                    <h3 class="text-2xl font-display font-bold text-white">V. Arquitectura de Código en Scratch 3.0</h3>
+                    <p class="text-slate-400 text-sm">Implementación lógica nativa mediante bloques del MIT Media Lab</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <h4 class="font-bold text-white text-sm uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-clone text-amber-400"></i> Minijuego de Clonación Imposible (NubeHumo)
+                        </h4>
+                        <div class="space-y-2 font-mono text-xs">
+                            <div class="scratch-block-event p-2.5 rounded-t-lg font-bold">
+                                al hacer clic en este objeto
+                            </div>
+                            <div class="scratch-block-variable p-2.5">
+                                cambiar [Clones_Humo] por (50)
+                            </div>
+                            <div class="scratch-block-control p-3 space-y-2">
+                                <div>repetir (50) veces</div>
+                                <div class="pl-4 scratch-block-control p-1.5 rounded">
+                                    crear clon de [myself]
+                                </div>
+                            </div>
+                            <div class="scratch-block-control p-2.5 rounded-b-lg">
+                                eliminar este clon
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <h4 class="font-bold text-white text-sm uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-glitch-red"></i> Bucle de Degeneración de Escenario
+                        </h4>
+                        <div class="space-y-2 font-mono text-xs">
+                            <div class="scratch-block-event p-2.5 rounded-t-lg font-bold">
+                                al recibir [Iniciar_Fase3]
+                            </div>
+                            <div class="scratch-block-control p-3 space-y-2">
+                                <div>por siempre</div>
+                                <div class="pl-4 space-y-1.5">
+                                    <div class="scratch-block-looks p-1.5 rounded">cambiar efecto [pixelar] por (15)</div>
+                                    <div class="scratch-block-looks p-1.5 rounded">cambiar efecto [color] por (25)</div>
+                                    <div class="scratch-block-looks p-1.5 rounded">tocar sonido [Glitch_Noise]</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <div id="view-sim" class="hidden space-y-6">
+
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-glitch-red/20 text-glitch-red border border-glitch-red/30 uppercase">Prototipo Interactivo de la Fase 1 a la 5</span>
+                    <h3 class="text-2xl font-display font-bold text-white">Simulador del Motor del Juego Eco-Paradise</h3>
+                    <p class="text-slate-400 text-xs">Experimenta el paso de tareas tiernas a los mensajes perturbadores y la clonación masiva de humo.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="restartSimulation()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5 border border-slate-700">
+                        <i class="fa-solid fa-rotate-right"></i> Reiniciar Experiencia
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <div class="lg:col-span-2 bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden relative shadow-2xl flex flex-col min-h-[460px]">
+                    
+                    <div class="bg-slate-900 px-4 py-2 border-b border-slate-800 flex justify-between items-center text-xs font-mono text-slate-400">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-pink-400"></span>
+                            <span>Scratch Stage Canvas (Simulado)</span>
+                        </div>
+                        <div id="sim-phase-badge" class="font-bold text-pink-300">FASE 1: ILUSIÓN KAWAII</div>
+                    </div>
+
+                    <div id="sim-canvas-wrapper" class="relative flex-grow flex items-center justify-center p-4 bg-slate-950 overflow-hidden">
+                        
+                        <canvas id="scratchCanvas" class="w-full h-full max-w-[600px] max-h-[360px] rounded-xl shadow-lg border border-slate-800/50"></canvas>
+
+                        <div id="sim-overlay-error" class="hidden absolute inset-0 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center z-30">
+                            <div class="max-w-md space-y-4 border border-glitch-red/50 bg-slate-900/90 p-6 rounded-2xl shadow-2xl">
+                                <div class="w-12 h-12 rounded-full bg-glitch-red/20 text-glitch-red mx-auto flex items-center justify-center text-2xl font-mono">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+                                <h4 class="font-mono text-glitch-red text-sm font-bold tracking-widest">[SYSTEM_OVERRIDE]: CONTENIDO NO CONFORME</h4>
+                                <p class="text-xs text-slate-300 font-mono">
+                                    LAS ENTIDADES INDUSTRIALES HAN DETENIDO LA EJECUCIÓN.<br>ELIMINANDO PROYECTO: ECO_PARADISE.SB3...
+                                </p>
+                                <div class="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden border border-slate-800">
+                                    <div id="shutdown-progress" class="bg-glitch-red h-full w-0 transition-all duration-3000"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sim-overlay-final" class="hidden absolute inset-0 bg-slate-950 flex flex-col items-center justify-center p-6 text-left font-mono z-40">
+                            <div class="max-w-xl space-y-4 text-emerald-400 text-xs sm:text-sm leading-relaxed">
+                                <p class="text-white font-bold text-base border-b border-emerald-500/30 pb-2">
+                                    > El juego ha terminado, pero la realidad no.
+                                </p>
+                                <p>
+                                    Tus acciones individuales (reciclar, ahorrar energía, cuidar la naturaleza) son valiosas e indispensables, pero resultan insuficientes si las realizamos de forma aislada.
+                                </p>
+                                <p class="text-slate-300">
+                                    La verdadera transformación ambiental no consiste en asumir una culpa individual prefabricada, sino en organizarnos, educarnos y exigir regulaciones estrictas a las grandes industrias.
+                                </p>
+                                <div class="pt-4 flex justify-between items-center text-slate-500 text-[11px]">
+                                    <span>Proyecto AEP | Colegio Público Enmanuel Mongalo y Rubio</span>
+                                    <button onclick="restartSimulation()" class="px-3 py-1.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30">
+                                        Volver a Iniciar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="glitch-data-banner" class="hidden bg-glitch-red/10 border-t border-glitch-red/30 p-3 px-4 text-xs font-mono text-glitch-red flex items-start gap-3">
+                        <i class="fa-solid fa-triangle-exclamation text-base mt-0.5"></i>
+                        <div id="glitch-data-text">
+                            Cargando datos del sistema...
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-5 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-white text-sm border-b border-slate-800 pb-2 flex items-center justify-between">
+                            <span>Panel de Control de Tareas</span>
+                            <span id="score-badge" class="text-xs font-mono text-pink-300 bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/20">Eco-Puntos: 0</span>
+                        </h4>
+
+                        <div id="task-controls" class="space-y-3">
+
+                            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                                <span class="text-xs font-bold text-slate-200 block">Tarea 1: Selección de Sorbete/Pajilla</span>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="doTask1('plastic')" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 font-semibold transition-all">
+                                        <i class="fa-solid fa-box text-pink-400 mr-1"></i> Plástico
+                                    </button>
+                                    <button onclick="doTask1('paper')" class="px-3 py-2 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 text-xs text-pink-300 font-bold border border-pink-500/30 transition-all">
+                                        <i class="fa-solid fa-leaf text-emerald-400 mr-1"></i> Cartón Ecológico
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                                <span class="text-xs font-bold text-slate-200 block">Tarea 2: Reciclaje de Botellas de Agua</span>
+                                <button id="btn-recycle" onclick="doTask2()" class="w-full py-2 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 text-xs text-sky-300 font-bold border border-sky-500/30 transition-all flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-recycle text-sky-400"></i> Reciclar 3 Botellas de Plástico
+                                </button>
+                            </div>
+
+                            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                                <span class="text-xs font-bold text-slate-200 block">Tarea 3: Ahorro Energético Doméstico</span>
+                                <button id="btn-light" onclick="doTask3()" class="w-full py-2 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-xs text-amber-300 font-bold border border-amber-500/30 transition-all flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-lightbulb text-amber-400"></i> Apagar Focos de la Casa
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div id="phase3-controls" class="hidden bg-glitch-red/10 p-4 rounded-xl border border-glitch-red/30 space-y-3">
+                            <span class="text-xs font-mono font-bold text-glitch-red block">FASE 3: MINIJUEGO DE HUMO IMPOSIBLE</span>
+                            <p class="text-[11px] text-slate-300">
+                                Haz clic sobre el lienzo para "limpiar las nubes de humo". Cada clic ejecutará el algoritmo de clonación masiva x50.
+                            </p>
+                            <div class="flex justify-between text-xs font-mono">
+                                <span class="text-slate-400">Clones de Humo:</span>
+                                <span id="smoke-count" class="font-bold text-glitch-red">0 / 250</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-sky-400"></i>
+                        <span>Estado: <strong id="sim-status-text" class="text-emerald-400">Ejecutando Fase 1</strong></span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="view-presentation" class="hidden flex-col min-h-[75vh] justify-between bg-slate-900 text-white rounded-3xl p-6 sm:p-12 shadow-2xl relative border border-slate-800">
+            
+            <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-1 bg-glitch-red text-slate-950 font-bold rounded text-xs">Defensa de Proyecto AEP</span>
+                    <span class="text-xs text-slate-400 font-mono">Gerson Javier Castro Aráuz | Colegio Enmanuel Mongalo y Rubio</span>
+                </div>
+                <div class="text-xs font-mono font-bold text-sky-400" id="slide-counter">
+                    Diapositiva 1 de 5
+                </div>
+            </div>
+
+            <div class="py-8 flex-grow flex items-center">
+                
+                <div class="slide-item slide-active flex-col space-y-6 w-full max-w-4xl mx-auto">
+                    <span class="text-pink-300 font-mono font-bold tracking-widest text-xs uppercase">Diapositiva 1: Presentación Oficial</span>
+                    <h2 class="text-3xl sm:text-5xl font-display font-black text-white leading-tight">
+                        Eco-Paradise: <span class="text-glitch-red font-mono">[SYSTEM_FAILURE]</span>
+                    </h2>
+                    <p class="text-slate-300 text-base sm:text-lg">
+                        Estimada docente de AEP y compañeros: Presento la propuesta conceptual y técnica para el desarrollo de un proyecto en Scratch 3.0 enfocado en la deconstrucción narrativa de la culpa ambiental.
+                    </p>
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 text-xs font-mono text-slate-300 flex items-center gap-3">
+                        <i class="fa-solid fa-cat text-pink-400 text-xl"></i>
+                        <span>Estética: Inicialmente Kawaii/Pacífica ──> Final: Distopía Glitch y Crítica Social</span>
+                    </div>
+                </div>
+
+                <div class="slide-item hidden flex-col space-y-6 w-full max-w-4xl mx-auto">
+                    <span class="text-pink-300 font-mono font-bold tracking-widest text-xs uppercase">Diapositiva 2: Planteamiento Científico</span>
+                    <h2 class="text-3xl sm:text-4xl font-display font-bold text-white">
+                        El Mito de la Responsabilidad Puramente Individual
+                    </h2>
+                    <div class="p-5 bg-slate-950 rounded-2xl border-l-4 border-glitch-red space-y-2">
+                        <p class="text-slate-200 text-sm italic">
+                            "100 empresas de energía fósil generan más del 71% de las emisiones industriales globales desde 1988." (CDP Report, 2017)
+                        </p>
+                    </div>
+                    <p class="text-slate-300 text-sm">
+                        La estrategia histórica de Greenwashing busca trasladar la carga legal y moral desde los conglomerados siderúrgicos y petroleros hacia las decisiones cotidianas del ciudadano común.
+                    </p>
+                </div>
+
+                <div class="slide-item hidden flex-col space-y-6 w-full max-w-4xl mx-auto">
+                    <span class="text-pink-300 font-mono font-bold tracking-widest text-xs uppercase">Diapositiva 3: La Deconstrucción Narrativa</span>
+                    <h2 class="text-3xl sm:text-4xl font-display font-bold text-white">
+                        Las 5 Fases de Gameplay en Scratch 3.0
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                            <strong class="text-pink-300 block mb-1">1. Ilusión Kawaii:</strong> Tareas cotidianas con el gato Lumi.
+                        </div>
+                        <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                            <strong class="text-sky-300 block mb-1">2. Fría Matemática:</strong> Calculadora revela 0.000001% vs 71%.
+                        </div>
+                        <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                            <strong class="text-amber-300 block mb-1">3. Corrupción Visual:</strong> Minijuego de humo con clonación masiva x50.
+                        </div>
+                        <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                            <strong class="text-glitch-red block mb-1">4. Corporate Shutdown:</strong> Bloqueo del sistema por entes industriales.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-item hidden flex-col space-y-6 w-full max-w-4xl mx-auto">
+                    <span class="text-pink-300 font-mono font-bold tracking-widest text-xs uppercase">Diapositiva 4: Rigor Técnico en Scratch</span>
+                    <h2 class="text-3xl sm:text-4xl font-display font-bold text-white">
+                        Uso Avanzado de Bloques de Programación
+                    </h2>
+                    <ul class="space-y-3 text-slate-300 text-sm">
+                        <li class="flex items-start gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-code-branch text-amber-400 mt-1"></i>
+                            <span><strong>Clonación Dinámica:</strong> Saturación programada de objetos en pantalla para simular la imposibilidad matemática.</span>
+                        </li>
+                        <li class="flex items-start gap-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-palette text-purple-400 mt-1"></i>
+                            <span><strong>Filtros de Imagen Nativos:</strong> Uso de efectos pixelar, ojo de pez y color en bucles acelerados sin assets pesados externos.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="slide-item hidden flex-col space-y-6 w-full max-w-4xl mx-auto">
+                    <span class="text-pink-300 font-mono font-bold tracking-widest text-xs uppercase">Diapositiva 5: Conclusión AEP</span>
+                    <h2 class="text-3xl sm:text-4xl font-display font-bold text-white">
+                        Aporte Educativo y Transformación Social
+                    </h2>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Este proyecto demuestra que la materia <strong>AEP</strong> no solo enseña a programar o crear negocios tradicionales, sino a desarrollar el pensamiento crítico para motivar la organización comunitaria y la exigencia de políticas públicas efectivas.
+                    </p>
+                    <div class="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-center text-emerald-400 font-bold text-sm">
+                        ¡Muchas gracias por su atención!
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex justify-between items-center border-t border-slate-800 pt-4">
+                <button onclick="prevSlide()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-chevron-left"></i> Anterior
+                </button>
+                <div class="flex space-x-1.5" id="slide-dots"></div>
+                <button onclick="nextSlide()" class="px-4 py-2 bg-glitch-red hover:bg-red-600 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                    Siguiente <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 py-6 text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:text-left">
+            <p>© 2026 Gerson Javier Castro Aráuz - Propuesta de Proyecto Scratch 3.0 para AEP.</p>
+            <p class="mt-2 sm:mt-0">Colegio Público Enmanuel Mongalo y Rubio</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchView(view) {
+            const docView = document.getElementById('view-doc');
+            const simView = document.getElementById('view-sim');
+            const presentationView = document.getElementById('view-presentation');
+            
+            const btnDoc = document.getElementById('btn-view-doc');
+            const btnSim = document.getElementById('btn-view-sim');
+            const btnPres = document.getElementById('btn-view-presentation');
+
+            docView.classList.add('hidden');
+            simView.classList.add('hidden');
+            presentationView.classList.add('hidden');
+            presentationView.classList.remove('flex');
+
+            btnDoc.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all flex items-center gap-1.5";
+            btnSim.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all flex items-center gap-1.5";
+            btnPres.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 transition-all flex items-center gap-1.5";
+
+            if (view === 'doc') {
+                docView.classList.remove('hidden');
+                btnDoc.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md hover:bg-emerald-400 flex items-center gap-1.5";
+            } else if (view === 'sim') {
+                simView.classList.remove('hidden');
+                btnSim.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md hover:bg-emerald-400 flex items-center gap-1.5";
+            } else {
+                presentationView.classList.remove('hidden');
+                presentationView.classList.add('flex');
+                btnPres.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md hover:bg-emerald-400 flex items-center gap-1.5";
+                updateSlideDots();
+            }
+        }
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide-item');
+        const slideCounter = document.getElementById('slide-counter');
+
+        function showSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= slides.length) index = slides.length - 1;
+
+            slides.forEach((s, i) => {
+                if (i === index) {
+                    s.classList.remove('hidden');
+                    s.classList.add('slide-active');
+                } else {
+                    s.classList.add('hidden');
+                    s.classList.remove('slide-active');
+                }
+            });
+
+            currentSlide = index;
+            if (slideCounter) {
+                slideCounter.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+            }
+            updateSlideDots();
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) showSlide(currentSlide - 1);
+        }
+
+        function updateSlideDots() {
+            const dotsContainer = document.getElementById('slide-dots');
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = `w-2.5 h-2.5 rounded-full cursor-pointer transition-all ${i === currentSlide ? 'bg-glitch-red w-5' : 'bg-slate-700'}`;
+                dot.onclick = () => showSlide(i);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function initCharts() {
+            const ctx1 = document.getElementById('chartEmisiones');
+            if (ctx1) {
+                new Chart(ctx1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [
+                            ['Emisiones Industriales', 'Globales (100 Corp.)'],
+                            ['Acciones Individuales', 'Ciudadanas']
+                        ],
+                        datasets: [{
+                            data: [71, 29],
+                            backgroundColor: ['#ff2a5f', '#a8e6cf'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#cbd5e1', font: { family: 'Plus Jakarta Sans', size: 11 } }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        const item = tooltipItems[0];
+                                        let label = item.chart.data.labels[item.dataIndex];
+                                        if (Array.isArray(label)) {
+                                            return label.join(' ');
+                                        } else {
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const ctx2 = document.getElementById('chartTiempo');
+            if (ctx2) {
+                new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            ['1 Minuto Operativo', 'Industrial Alpha'],
+                            ['Años Reciclaje', 'Ciudadano Requerido']
+                        ],
+                        datasets: [{
+                            label: 'Equivalencia en Años',
+                            data: [0.0019, 400000],
+                            backgroundColor: ['#00f0ff', '#ff2a5f']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                type: 'logarithmic',
+                                ticks: { color: '#94a3b8' },
+                                grid: { color: '#334155' }
+                            },
+                            x: {
+                                ticks: { color: '#94a3b8' },
+                                grid: { display: false }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        const item = tooltipItems[0];
+                                        let label = item.chart.data.labels[item.dataIndex];
+                                        if (Array.isArray(label)) {
+                                            return label.join(' ');
+                                        } else {
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        let simCanvas, simCtx;
+        let simPhase = 1;
+        let simScore = 0;
+        let smokeParticles = [];
+        let taskCompletedCount = 0;
+
+        function initSimEngine() {
+            simCanvas = document.getElementById('scratchCanvas');
+            if (!simCanvas) return;
+            simCtx = simCanvas.getContext('2d');
+            simCanvas.width = 600;
+            simCanvas.height = 360;
+
+            simCanvas.addEventListener('click', function(e) {
+                if (simPhase === 3) {
+                    spawnSmokeClones(50);
+                }
+            });
+
+            renderSim();
+        }
+
+        function restartSimulation() {
+            simPhase = 1;
+            simScore = 0;
+            taskCompletedCount = 0;
+            smokeParticles = [];
+
+            document.getElementById('sim-phase-badge').textContent = "FASE 1: ILUSIÓN KAWAII";
+            document.getElementById('sim-phase-badge').className = "font-bold text-pink-300";
+            document.getElementById('score-badge').textContent = `Eco-Puntos: ${simScore}`;
+            document.getElementById('sim-status-text').textContent = "Ejecutando Fase 1";
+            document.getElementById('sim-status-text').className = "text-emerald-400";
+
+            document.getElementById('glitch-data-banner').classList.add('hidden');
+            document.getElementById('sim-overlay-error').classList.add('hidden');
+            document.getElementById('sim-overlay-final').classList.add('hidden');
+
+            document.getElementById('task-controls').classList.remove('hidden');
+            document.getElementById('phase3-controls').classList.add('hidden');
+
+            renderSim();
+        }
+
+        function showGlitchNotice(text) {
+            const banner = document.getElementById('glitch-data-banner');
+            const textEl = document.getElementById('glitch-data-text');
+            textEl.innerHTML = text;
+            banner.classList.remove('hidden');
+        }
+
+        function doTask1(type) {
+            if (simPhase !== 1) return;
+            taskCompletedCount++;
+            if (type === 'paper') {
+                simScore += 10;
+                document.getElementById('score-badge').textContent = `Eco-Puntos: ${simScore}`;
+                showGlitchNotice("<strong>[DATO DE SISTEMA]:</strong> Elegiste pajilla de cartón (+10 pts). Mientras decidías, la <em>Entidad Industrial Alpha</em> vertió <strong>500,000 kg</strong> de plástico tóxico en el Océano.");
+            } else {
+                showGlitchNotice("<strong>[DATO DE SISTEMA]:</strong> Elegiste plástico. La Entidad Industrial Alpha vertió 500,000 kg de plástico de todos modos.");
+            }
+            checkPhaseProgress();
+            renderSim();
+        }
+
+        function doTask2() {
+            if (simPhase !== 1) return;
+            taskCompletedCount++;
+            simScore += 15;
+            document.getElementById('score-badge').textContent = `Eco-Puntos: ${simScore}`;
+            showGlitchNotice("<strong>[DATO DE SISTEMA]:</strong> Ahorraste 500 ml de plástico reciclando. La corporación ficticia <em>AquaCorp</em> acaba de extraer <strong>1,000,000 L</strong> del acuífero local.");
+            checkPhaseProgress();
+            renderSim();
+        }
+
+        function doTask3() {
+            if (simPhase !== 1) return;
+            taskCompletedCount++;
+            simScore += 20;
+            document.getElementById('score-badge').textContent = `Eco-Puntos: ${simScore}`;
+            showGlitchNotice("<strong>[DATO DE SISTEMA]:</strong> Ahorraste 1 Watt apagando focos. Equivalente al consumo de <strong>0.000001 segundos</strong> del Conglomerado Siderúrgico Beta.");
+            checkPhaseProgress();
+            renderSim();
+        }
+
+        function checkPhaseProgress() {
+            if (taskCompletedCount >= 3 && simPhase === 1) {
+                setTimeout(() => {
+                    simPhase = 2;
+                    document.getElementById('sim-phase-badge').textContent = "FASE 2: LA FRÍA MATEMÁTICA";
+                    document.getElementById('sim-phase-badge').className = "font-bold text-sky-400 font-mono";
+                    showGlitchNotice("<strong>FASE 2 DESBLOQUEADA:</strong> Calculadora Ambiental instalada. Tu impacto individual acumulado es <strong>0.000001%</strong> vs <strong>71.0%</strong> industrial.");
+                    
+                    setTimeout(() => {
+                        startPhase3();
+                    }, 4000);
+                }, 1000);
+            }
+        }
+
+        function startPhase3() {
+            simPhase = 3;
+            document.getElementById('sim-phase-badge').textContent = "FASE 3: CORRUPCIÓN VISUAL";
+            document.getElementById('sim-phase-badge').className = "font-bold text-glitch-red font-mono";
+            document.getElementById('task-controls').classList.add('hidden');
+            document.getElementById('phase3-controls').classList.remove('hidden');
+            
+            spawnSmokeClones(15);
+            renderSim();
+        }
+
+        function spawnSmokeClones(count) {
+            for (let i = 0; i < count; i++) {
+                smokeParticles.push({
+                    x: Math.random() * (simCanvas.width - 40) + 20,
+                    y: Math.random() * (simCanvas.height - 40) + 20,
+                    size: Math.random() * 30 + 20
+                });
+            }
+
+            document.getElementById('smoke-count').textContent = `${smokeParticles.length} / 250`;
+
+            if (smokeParticles.length >= 200) {
+                triggerShutdownPhase4();
+            } else {
+                renderSim();
+            }
+        }
+
+        function triggerShutdownPhase4() {
+            simPhase = 4;
+            document.getElementById('sim-phase-badge').textContent = "FASE 4: CORPORATE SHUTDOWN";
+            document.getElementById('sim-overlay-error').classList.remove('hidden');
+            
+            const bar = document.getElementById('shutdown-progress');
+            bar.style.width = "100%";
+
+            setTimeout(() => {
+                simPhase = 5;
+                document.getElementById('sim-overlay-error').classList.add('hidden');
+                document.getElementById('sim-overlay-final').classList.remove('hidden');
+                document.getElementById('sim-phase-badge').textContent = "FASE 5: DESENLACE";
+            }, 3500);
+        }
+
+        function renderSim() {
+            if (!simCtx) return;
+
+            simCtx.clearRect(0, 0, simCanvas.width, simCanvas.height);
+
+            if (simPhase === 1) {
+                simCtx.fillStyle = '#ffdfba';
+                simCtx.fillRect(0, 0, simCanvas.width, simCanvas.height);
+
+                simCtx.fillStyle = '#bae1ff';
+                simCtx.fillRect(0, 0, simCanvas.width, 240);
+
+                simCtx.fillStyle = '#a8e6cf';
+                simCtx.fillRect(0, 240, simCanvas.width, 120);
+
+                simCtx.fillStyle = '#ffb6c1';
+                simCtx.beginPath();
+                simCtx.arc(100, 220, 25, 0, Math.PI * 2);
+                simCtx.fill();
+
+                simCtx.fillStyle = '#ffffff';
+                simCtx.beginPath();
+                simCtx.arc(92, 215, 4, 0, Math.PI * 2);
+                simCtx.arc(108, 215, 4, 0, Math.PI * 2);
+                simCtx.fill();
+
+                simCtx.fillStyle = '#333333';
+                simCtx.font = '12px Outfit';
+                simCtx.fillText('Lumi (Gato Guía)', 60, 260);
+
+            } else if (simPhase === 2 || simPhase === 3) {
+                simCtx.fillStyle = '#121721';
+                simCtx.fillRect(0, 0, simCanvas.width, simCanvas.height);
+
+                simCtx.fillStyle = '#2d3748';
+                simCtx.fillRect(0, 240, simCanvas.width, 120);
+
+                smokeParticles.forEach(p => {
+                    simCtx.fillStyle = 'rgba(255, 42, 95, 0.45)';
+                    simCtx.beginPath();
+                    simCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    simCtx.fill();
+                });
+
+                simCtx.fillStyle = '#ff2a5f';
+                simCtx.font = '14px Fira Code';
+                simCtx.fillText(`[CLONES DE HUMO SATURANDO]: ${smokeParticles.length}`, 20, 30);
+            }
+        }
+
+        window.onload = function() {
+            initCharts();
+            initSimEngine();
+        };
+    </script>
+</body>
+</html>
+```
+
+### Highlights of this Project Proposal & Web App:
+1. **Accurate Subject Representation**: Fully reflects **"Eco-Paradise: [SYSTEM_FAILURE]"** for Scratch 3.0, created by **Gerson Javier Castro Aráuz** for the **AEP** course.
+2. **Interactive Scratch Prototype Engine**: Included in the "Simulador Interactivo" view, featuring:
+   - **Phase 1 Tasks**: Straw selection, bottle recycling, and energy saving choices.
+   - **Disturbing Real-Time Data Callouts**: Shows the contrast between citizen actions and corporate destruction (Industrial Alpha, AquaCorp, Siderúrgico Beta).
+   - **Phase 3 Smoke-Cloning Mechanic**: Clicking the stage spawns 50 cloud clones, saturating the screen and triggering the `SYSTEM_OVERRIDE` error screen.
+   - **Phase 5 Action & Hope Message**: Concludes with a terminal reflection on systemic change and community organization.
+3. **Data Visualizations & Document Sections**: Powered by Chart.js for the emissions ratio and equivalency timeline, alongside code blocks for Scratch algorithms.
